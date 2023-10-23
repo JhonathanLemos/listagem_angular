@@ -1,0 +1,40 @@
+<div class="div-table">
+  <div fxLayout="row" fxLayoutAlign="space-between none">
+    <button mat-stroked-button color="primary" routerLink="add">Adicionar Cliente</button>
+    <mat-form-field appearance="outline">
+      <mat-label>Pesquisar</mat-label>
+      <input (keyup)="searchCliente(search)" [(ngModel)]="search" matInput type="text" placeholder="Pesquisar...">
+      <mat-hint>Digite pelo menos 3 caracteres para pesquisar</mat-hint>
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <mat-table [dataSource]="clientes" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nome">
+      <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.nome }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button (click)="editarCliente(element.id)" color="primary" mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button color="warn" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="pageSize" [pageIndex]="pageIndex" [length]="length"
+  (page)="onPageChange($event)"></mat-paginator>
+</div>
