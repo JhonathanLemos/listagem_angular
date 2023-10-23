@@ -8,7 +8,7 @@ namespace Api_angular.Entidades
 
         public string Nome { get; set; }
 
-        [JsonIgnore]
+       
         public Cliente Cliente { get; set; }
         public long ClienteId { get; set; }
     }
