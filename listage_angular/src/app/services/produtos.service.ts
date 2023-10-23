@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Pagination } from '../Pagination';
+import { Produto } from '../Produto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class ProdutosService {
           items: response.items.map(produto => ({
             id: produto.id,
             nome: produto.nome,
+            cliente: produto.cliente
           }))
         }
       })
@@ -34,22 +36,22 @@ export class ProdutosService {
   }
 
   // Obter um produto por ID
-  getProductById(productId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${productId}`);
+  getProductById(productId: number): Observable<Produto> {
+    return this.http.get<Produto>(`${this.apiUrl}/${productId}`);
   }
 
   // Adicionar um novo produto
-  addProduct(product: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, product);
+  addProduct(product: Produto): Observable<Produto> {
+    return this.http.post<Produto>(`${this.apiUrl}`, product);
   }
 
   // Atualizar um produto existente
-  updateProduct(productId: number, product: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${productId}`, product);
+  updateProduct(productId: number, product: Produto): Observable<Produto> {
+    return this.http.put<Produto>(`${this.apiUrl}/${productId}`, product);
   }
 
   // Excluir um produto por ID
-  deleteProduct(productId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${productId}`);
+  deleteProduct(productId: number): Observable<Produto> {
+    return this.http.delete<Produto>(`${this.apiUrl}/${productId}`);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, map, max } from 'rxjs';
 import { Pagination } from '../Pagination';
+import { Cliente } from '../Cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -34,31 +35,31 @@ export class ClientesService {
     );
   }
 
-  getListOfClientes(): Observable<any> {
+  getListOfClientes(): Observable<Cliente[]> {
 
-    return this.http.get<any>(`${this.apiUrl}/GetAllCustomers`).pipe(
+    return this.http.get<Cliente[]>(`${this.apiUrl}/GetAllCustomers`).pipe(
       map(response => {
         return response
       })
     );
   }
   // Obter um produto por ID
-  getclienteById(clienteId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${clienteId}`);
+  getclienteById(clienteId: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.apiUrl}/${clienteId}`);
   }
 
   // Adicionar um novo produto
-  addcliente(cliente: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, cliente);
+  addcliente(cliente: Cliente): Observable<Cliente> {
+    return this.http.post<Cliente>(`${this.apiUrl}`, cliente);
   }
 
   // Atualizar um produto existente
-  updatecliente(clienteId: number, cliente: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${clienteId}`, cliente);
+  updatecliente(clienteId: number, cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.apiUrl}/${clienteId}`, cliente);
   }
 
   // Excluir um produto por ID
-  deletecliente(clienteId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${clienteId}`);
+  deletecliente(clienteId: number): Observable<Cliente> {
+    return this.http.delete<Cliente>(`${this.apiUrl}/${clienteId}`);
   }
 }

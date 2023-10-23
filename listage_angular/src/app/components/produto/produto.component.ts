@@ -49,6 +49,7 @@ export class ProdutoComponent implements OnInit {
 
   getAllProdutos() {
     this.produtoService.getProducts('', this.pageSize, this.pageIndex).subscribe((data => {
+      debugger
       this.produtos = data.items;
       this.length = data.totalItems;
     }))
