@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Cliente } from 'src/app/Cliente';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationAlertComponent } from '../confirmation-alert/confirmation-alert.component';
 
 @Component({
   selector: 'app-cliente',
@@ -10,11 +12,12 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   styleUrls: ['./cliente.component.css']
 })
 export class ClienteComponent implements OnInit {
-  constructor(private clienteService: ClientesService, private router: Router) { }
+  constructor(private clienteService: ClientesService, private router: Router, public dialog: MatDialog) { }
   displayedColumns: string[] = ['id', 'nome', 'acoes'];
   clientes: Cliente[] = []
   search !: ''
   pageSize: number = 5;
+  idToRemove!: number;
   pageIndex: number = 0;
   length: number = 0;
 
@@ -38,7 +41,7 @@ export class ClienteComponent implements OnInit {
       this.getAllClientes();
 
     if (value.length >= 3)
-      this.clienteService.getclientes(this.search, this.pageSize, this.pageIndex).subscribe(res => {
+      this.clienteService.getclientes(this.search, this.pageSize, 0).subscribe(res => {
         this.clientes = res.items
         this.length = res.totalItems
       });
@@ -56,4 +59,30 @@ export class ClienteComponent implements OnInit {
     // Atualize seus dados com base no tamanho da página e no índice da página.
     // Você pode fazer uma chamada à API ou ajustar sua fonte de dados aqui.
   }
+
+  deletarCliente(id: number){
+      this.idToRemove = id;
+      const dialogRef = this.dialog.open(ConfirmationAlertComponent,
+        {
+          width: '450px',
+          height: '350px',
+          hasBackdrop: false,
+          data: { mensagem: "Tem certeza de que deseja excluir este item?", cor: '', subMensagem: 'Essa ação não pode ser desfeita.' }
+        })
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if (result == 'deletar') {
+          this.deletar()
+  
+        }
+      })
+    }
+
+    deletar() {
+      this.clienteService.deletecliente(this.idToRemove).subscribe(res => {
+        this.getAllClientes();
+      }
+      );
+    }
 }

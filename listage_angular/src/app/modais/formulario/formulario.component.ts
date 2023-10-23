@@ -61,8 +61,9 @@ export class FormularioComponent implements OnInit {
   }
 
   getAllClientes() {
-    this.clienteService.getclientes('', 10, 10).subscribe((data => {
-      this.clientes = data.items
+    this.clienteService.getListOfClientes().subscribe((data => {
+      debugger
+      this.clientes = data
     }))
   }
 }

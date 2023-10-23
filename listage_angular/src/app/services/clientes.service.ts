@@ -34,6 +34,14 @@ export class ClientesService {
     );
   }
 
+  getListOfClientes(): Observable<any> {
+
+    return this.http.get<any>(`${this.apiUrl}/GetAllCustomers`).pipe(
+      map(response => {
+        return response
+      })
+    );
+  }
   // Obter um produto por ID
   getclienteById(clienteId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${clienteId}`);
