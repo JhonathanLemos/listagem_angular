@@ -43,6 +43,13 @@ public class ProdutosController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetAllCustomers")]
+    public async Task<IActionResult> GetAllCustomers()
+    {
+
+        return Ok(await _repository.GetAll().ToListAsync());
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
